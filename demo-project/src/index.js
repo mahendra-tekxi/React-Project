@@ -1,7 +1,7 @@
+import { useFormik } from 'formik';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-
 
 // -------------using jsx--------------------
 // const element = <h1>welcome to React Programming word ......</h1>
@@ -193,55 +193,103 @@ import './index.css';
 // ReactDOM.render(element, document.getElementById('root'));
 
 //--------------------------- Form input Types ------------------------------------
-class EmployeeComponent extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            employee:{
-                Id:'',
-                Name:'',
-                Location:'',
-                Salary:''
-            }
-        };
-    }
+// class EmployeeComponent extends React.Component{
+//     constructor(props){
+//         super(props);
+//         this.state={
+//             employee:{
+//                 Id:'',
+//                 Name:'',
+//                 Location:'',
+//                 Salary:''
+//             }
+//         };
+//     }
 
-    changeHandler=e=>{
-        const name=e.target.name;
-        const value=e.target.value;
+//     changeHandler=e=>{
+//         const name=e.target.name;
+//         const value=e.target.value;
 
-        this.setState({employee:{
-            ...this.state.employee,
-            [name]:value
-        }});
-    }
+//         this.setState({employee:{
+//             ...this.state.employee,
+//             [name]:value
+//         }});
+//     }
 
-    onCreateEmployee=()=>{
-        console.log(this.state.employee);
-    }
+//     onCreateEmployee=()=>{
+//         console.log(this.state.employee);
+//     }
 
-    render(){
-        return (<div>
+//     render(){
+//         return (<div>
+//             <h2>New Employee Form...</h2>
+//             <form>
+//                 <p>
+//                     <label>Employee Id : <input type="text" name="Id" value={this.state.employee.Id} onChange={this.changeHandler}></input></label>
+//                 </p>
+//                 <p>
+//                     <label>Employee Name : <input type="text" name="Name" value={this.state.employee.Name} onChange={this.changeHandler}></input></label>
+//                 </p>
+//                 <p>
+//                     <label>Employee Location : <input type="text" name="Location" value={this.state.employee.Location} onChange={this.changeHandler}></input></label>
+//                 </p>
+//                 <p>
+//                     <label>Employee Salary : <input type="text" name="Salary" value={this.state.employee.Salary} onChange={this.changeHandler}></input></label>
+//                 </p>
+//             </form>
+//             <button onClick={this.onCreateEmployee}>Create</button>
+//         </div>
+//         )
+//     }
+// }
+
+// const element=<EmployeeComponent></EmployeeComponent>
+// ReactDOM.render(element,document.getElementById("root"));
+
+
+//--------------------------- form velidation using formik -------------------------------
+const EmployeeComponent = () => {
+    const formik = useFormik({
+        initialValues: {
+            Id: '',
+            Name: '',
+            Location: '',
+            Salary: ''
+        },
+        onsubmit: values => {
+            alert(JSON.stringify(values));
+        }
+    });
+
+    return (
+        <div>
             <h2>New Employee Form...</h2>
-            <form>
+            <form onsubmit={formik.handleSubmit}>
                 <p>
-                    <label>Employee Id : <input type="text" name="Id" value={this.state.employee.Id} onChange={this.changeHandler}></input></label>
+                    <label htmlFor="Id">Employee ID : </label>
+                    <input type="text" name="Id" id="Id" value={formik.values.Id}
+                        onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>Employee Name : <input type="text" name="Name" value={this.state.employee.Name} onChange={this.changeHandler}></input></label>
+                    <label htmlFor="Id">Employee Name : </label>
+                    <input type="text" name="Name" id="Name" value={formik.values.Name}
+                        onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>Employee Location : <input type="text" name="Location" value={this.state.employee.Location} onChange={this.changeHandler}></input></label>
+                    <label htmlFor="Id">Employee Location : </label>
+                    <input type="text" name="Location" id="Location" value={formik.values.Location}
+                        onChange={formik.handleChange}></input>
                 </p>
                 <p>
-                    <label>Employee Salary : <input type="text" name="Salary" value={this.state.employee.Salary} onChange={this.changeHandler}></input></label>
+                    <label htmlFor="Id">Employee Salary : </label>
+                    <input type="text" name="Salary" id="Salary" value={formik.values.Salary}
+                        onChange={formik.handleChange}></input>
                 </p>
+                <button type="submit">Create</button>
             </form>
-            <button onClick={this.onCreateEmployee}>Create</button>
         </div>
-        )
-    }
+    )
 }
 
-const element=<EmployeeComponent></EmployeeComponent>
-ReactDOM.render(element,document.getElementById("root"));
+const element = <EmployeeComponent></EmployeeComponent>
+ReactDOM.render(element, document.getElementById("root"));
