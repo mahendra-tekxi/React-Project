@@ -121,73 +121,127 @@ import './index.css';
 
 
 //---------------------------- Intraction Between React Components -----------------------
-class Employee extends React.Component {
-    constructor(props) {
+// class Employee extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state={
+//             updatedSalary: null
+//         };
+//     }
+
+//     getUpdatedSalary = (salary) => {
+//         this.setState({ updatedSalary: salary });
+//     }
+
+//     render() {
+//         return <div>
+//             <h1>Employee Component.....</h1>
+//             <p>
+//                 <label>Employee Id:<b>{this.props.Id}</b></label>
+//             </p>
+//             <p>
+//                 <label>Employee Name:<b>{this.props.Name}</b></label>
+//             </p>
+//             <p>
+//                 <label>Employee Location:<b>{this.props.Location}</b></label>
+//             </p>
+//             <p>
+//                 <label>Total Salary:<b>{this.props.Salary}</b></label>
+//             </p>
+//             <p>
+//                 <label>Updated Salary :<b>{this.state.updatedSalary}</b></label>
+//             </p>
+//             <Salary BasicSalary={this.props.BasicSalary} HRA={this.props.HRA} SpecialAllowance={this.props.SpecialAllowance} onSalaryChanged={this.getUpdatedSalary}></Salary>
+//         </div>
+//     }
+// }
+
+// class Salary extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             basic: this.props.BasicSalary,
+//             hra: this.props.HRA,
+//             sa: this.props.SpecialAllowance
+//         };
+//     }
+
+//     updateSalary = () => {
+//         let salary = parseInt(this.refs.basic.value) + parseInt(this.refs.hra.value) +
+//             parseInt(this.refs.sa.value);
+//         this.props.onSalaryChanged(salary);
+//     }
+
+//     render() {
+//         return <div>
+//             <h1>Salary Component.....</h1>
+//             <p>
+//                 <label>Basic Salaty :<input type="text" ref="basic" defaultValue={this.state.basic}></input></label>
+//             </p>
+//             <p>
+//                 <label>HRA :<input type="text" ref="hra" defaultValue={this.state.hra}></input></label>
+//             </p>
+//             <p>
+//                 <label>Specila Allowance :<input type="text" ref="sa" defaultValue={this.state.sa}></input></label>
+//             </p>
+//             <button onClick={this.updateSalary}>Update</button>
+//         </div>
+//     }
+// }
+
+// const element = <Employee Id="101" Name="Mahendra" Location="Botad" Salary="25000" BasicSalary="10000" HRA="10000" SpecialAllowance="5000"></Employee>
+// ReactDOM.render(element, document.getElementById('root'));
+
+//--------------------------- Form input Types ------------------------------------
+class EmployeeComponent extends React.Component{
+    constructor(props){
         super(props);
         this.state={
-            updatedSalary: null
+            employee:{
+                Id:'',
+                Name:'',
+                Location:'',
+                Salary:''
+            }
         };
     }
 
-    getUpdatedSalary = (salary) => {
-        this.setState({ updatedSalary: salary });
+    changeHandler=e=>{
+        const name=e.target.name;
+        const value=e.target.value;
+
+        this.setState({employee:{
+            ...this.state.employee,
+            [name]:value
+        }});
     }
 
-    render() {
-        return <div>
-            <h1>Employee Component.....</h1>
-            <p>
-                <label>Employee Id:<b>{this.props.Id}</b></label>
-            </p>
-            <p>
-                <label>Employee Name:<b>{this.props.Name}</b></label>
-            </p>
-            <p>
-                <label>Employee Location:<b>{this.props.Location}</b></label>
-            </p>
-            <p>
-                <label>Total Salary:<b>{this.props.Salary}</b></label>
-            </p>
-            <p>
-                <label>Updated Salary :<b>{this.state.updatedSalary}</b></label>
-            </p>
-            <Salary BasicSalary={this.props.BasicSalary} HRA={this.props.HRA} SpecialAllowance={this.props.SpecialAllowance} onSalaryChanged={this.getUpdatedSalary}></Salary>
+    onCreateEmployee=()=>{
+        console.log(this.state.employee);
+    }
+
+    render(){
+        return (<div>
+            <h2>New Employee Form...</h2>
+            <form>
+                <p>
+                    <label>Employee Id : <input type="text" name="Id" value={this.state.employee.Id} onChange={this.changeHandler}></input></label>
+                </p>
+                <p>
+                    <label>Employee Name : <input type="text" name="Name" value={this.state.employee.Name} onChange={this.changeHandler}></input></label>
+                </p>
+                <p>
+                    <label>Employee Location : <input type="text" name="Location" value={this.state.employee.Location} onChange={this.changeHandler}></input></label>
+                </p>
+                <p>
+                    <label>Employee Salary : <input type="text" name="Salary" value={this.state.employee.Salary} onChange={this.changeHandler}></input></label>
+                </p>
+            </form>
+            <button onClick={this.onCreateEmployee}>Create</button>
         </div>
+        )
     }
 }
 
-class Salary extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            basic: this.props.BasicSalary,
-            hra: this.props.HRA,
-            sa: this.props.SpecialAllowance
-        };
-    }
-
-    updateSalary = () => {
-        let salary = parseInt(this.refs.basic.value) + parseInt(this.refs.hra.value) +
-            parseInt(this.refs.sa.value);
-        this.props.onSalaryChanged(salary);
-    }
-
-    render() {
-        return <div>
-            <h1>Salary Component.....</h1>
-            <p>
-                <label>Basic Salaty :<input type="text" ref="basic" defaultValue={this.state.basic}></input></label>
-            </p>
-            <p>
-                <label>HRA :<input type="text" ref="hra" defaultValue={this.state.hra}></input></label>
-            </p>
-            <p>
-                <label>Specila Allowance :<input type="text" ref="sa" defaultValue={this.state.sa}></input></label>
-            </p>
-            <button onClick={this.updateSalary}>Update</button>
-        </div>
-    }
-}
-
-const element = <Employee Id="101" Name="Mahendra" Location="Botad" Salary="25000" BasicSalary="10000" HRA="10000" SpecialAllowance="5000"></Employee>
-ReactDOM.render(element, document.getElementById('root'));
+const element=<EmployeeComponent></EmployeeComponent>
+ReactDOM.render(element,document.getElementById("root"));
