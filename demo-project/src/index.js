@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
+import * as yup from 'yup'
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 // -------------using jsx--------------------
 // const element = <h1>welcome to React Programming word ......</h1>
@@ -248,27 +253,27 @@ import { useFormik } from 'formik';
 
 //--------------------------- form velidation using formik -------------------------------
 
-const validateEmployee = empData => {
-    const errors = {};
+// const validateEmployee = empData => {
+//     const errors = {};
 
-    if (!empData.Name) {
-        errors.Name = "Please Enter Employee Name";
-    } else if (empData.Name.length > 20) {
-        errors.Name = "Employee Name should not execeed 20 chaeacters";
-    }
+//     if (!empData.Name) {
+//         errors.Name = "Please Enter Employee Name";
+//     } else if (empData.Name.length > 20) {
+//         errors.Name = "Employee Name should not execeed 20 chaeacters";
+//     }
 
-    if (!empData.Location) {
-        errors.Location = "Please Enter Employee Location";
-    }
+//     if (!empData.Location) {
+//         errors.Location = "Please Enter Employee Location";
+//     }
 
-    if (!empData.EmailId) {
-        errors.EmailId = "Please Enter Employee EmailId";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(empData.EmailId)) {
-        errors.EmailId = "Invelid email address";
-    }
+//     if (!empData.EmailId) {
+//         errors.EmailId = "Please Enter Employee EmailId";
+//     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(empData.EmailId)) {
+//         errors.EmailId = "Invelid email address";
+//     }
 
-    return errors;
-}
+//     return errors;
+// }
 
 
 const EmployeeComponent = () => {
@@ -281,7 +286,13 @@ const EmployeeComponent = () => {
             EmailId: ''
         },
 
-        validate: validateEmployee,
+        // validate: validateEmployee,           //using formik
+
+        validationSchema:yup.object({
+            Name:yup.string().max(20,"Name should not exceed 20 characters").required("please enter the Employee Name"),
+            EmailId:yup.string().email("Invelid email address").required("Please Enter Email Id"),
+            Location:yup.string().required("Please Enter A Location")
+        }),
 
         onSubmit: values => {
             alert(JSON.stringify(values));
@@ -321,6 +332,7 @@ const EmployeeComponent = () => {
                     {formik.touched.EmailId && formik.errors.EmailId ? <span style={{ color: 'red' }}>{formik.errors.EmailId}</span> : null}
                 </p>
                 <button type="submit">Create</button>
+                {/* <Button variant="primary">Primary</Button>{' '} */}
             </form>
         </div>
     )
