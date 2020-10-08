@@ -332,7 +332,7 @@ const EmployeeComponent = () => {
                     {formik.touched.EmailId && formik.errors.EmailId ? <span style={{ color: 'red' }}>{formik.errors.EmailId}</span> : null}
                 </p>
                 <button type="submit">Create</button>
-                {/* <Button variant="primary">Primary</Button>{' '} */}
+                <Button variant="primary">Primary</Button>{' '}
             </form>
         </div>
     )
