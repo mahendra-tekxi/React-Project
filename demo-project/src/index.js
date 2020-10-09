@@ -21,7 +21,10 @@ const EmployeeComponent = () => {
         validationSchema: yup.object({
             EmailId: yup.string().email("Invelid email address").required("Please Enter Email Id"),
             Confirm_Password: yup.string().required('Confirm Password is required').oneOf([yup.ref('Password'), null], 'Passwords does not match'),
-            Password: yup.string().required("Please Enter A Password"),
+            Password: yup.string().required("Please Enter A Password").matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{7,}$/,
+                "Must Contain 7 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+              )
         }),
 
         onSubmit: values => {
